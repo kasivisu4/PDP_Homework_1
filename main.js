@@ -1,30 +1,27 @@
 class Publication {
   title;
   author;
-  year_of_publication;
+  year;
   Error_message = "";
 
-  constructor(title, author, year_of_publication) {
-    this.isPublication(title, author, year_of_publication);
+  constructor(title, author, year) {
+    this.isPublication(title, author, year);
     this.title = title;
     this.author = author;
-    this.year_of_publication = year_of_publication;
+    this.year = year;
   }
-  isPublication(title, author, year_of_publication) {
+  isPublication(title, author, year) {
     if (!title) {
       this.Error_message += " title must be specified;";
     }
     if (!author) {
       this.Error_message += " author must be specified";
     }
-    if (!year_of_publication) {
-      this.Error_message += " year_of_publication must be specified";
-    } else if (
-      typeof year_of_publication != "number" ||
-      year_of_publication.toString().length != 4
-    ) {
+    if (!year) {
+      this.Error_message += " year must be specified";
+    } else if (typeof year != "number" || year.toString().length != 4) {
       this.Error_message +=
-        " year_of_public should be a number and no of digits should be 4";
+        " year should be a number and no of digits should be 4";
     }
   }
 }
@@ -35,6 +32,8 @@ class Book extends Publication {
   constructor(title, author, publisher, location, year) {
     super(title, author, year);
     this.isBook(publisher, location);
+    this.publisher = publisher;
+    this.location = location;
   }
   isBook(publisher, location) {
     if (!publisher) {
@@ -47,6 +46,9 @@ class Book extends Publication {
       throw new Error(this.Error_message);
     }
   }
+  get_book_details() {
+    return `Book Title: ${this.title}, Author: ${this.author}, Publisher: ${this.publisher}, Location: ${this.location}, Year : ${this.year}`;
+  }
 }
 
 class Article extends Publication {
@@ -56,6 +58,9 @@ class Article extends Publication {
   constructor(title, author, journal_name, volume, issue, year) {
     super(title, author, year);
     this.isArticle(journal_name, volume, issue);
+    this.journal_name = journal_name;
+    this.volume = volume;
+    this.issue = issue;
   }
 
   isArticle(journal_name, volume, issue) {
@@ -74,4 +79,6 @@ class Article extends Publication {
   }
 }
 
-book = new Book("title", "Kasi", "IEEE", "Bangalore", 2020);
+module.exports = {
+  Book,
+};
