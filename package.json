@@ -1,0 +1,19 @@
+{
+  "name": "pdp_homework_1",
+  "version": "1.0.0",
+  "description": "Publications problem code enhancement",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kasivisu4/PDP_Homework_1.git"
+  },
+  "author": "Kasi Viswanath",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kasivisu4/PDP_Homework_1/issues"
+  },
+  "homepage": "https://github.com/kasivisu4/PDP_Homework_1#readme"
+}
