@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kasivisu4/PDP_Homework_1#readme",
   "dependencies": {
-    "mocha": "^9.2.0"
+    "mocha": "^9.2.0",
+    "valid-url": "^1.0.9"
   }
 }
