@@ -1,9 +1,9 @@
-var validUrl = require("valid-url");
 class Publication {
   title;
   author;
   year;
   Error_message = "";
+  type;
 
   constructor(title, author, year) {
     this.isPublication(title, author, year);
@@ -35,6 +35,7 @@ class Book extends Publication {
     this.isBook(publisher, location);
     this.publisher = publisher;
     this.location = location;
+    super.type = "book";
   }
   isBook(publisher, location) {
     if (!publisher) {
@@ -65,6 +66,7 @@ class Article extends Publication {
     this.journal_name = journal_name;
     this.volume = volume;
     this.issue = issue;
+    super.type = "article";
   }
 
   isArticle(journal_name, volume, issue) {
@@ -95,15 +97,13 @@ class WebPage extends Publication {
     super(title, author, year);
     this.isWebPage(url);
     this.url = url;
+    super.type = "webpage";
   }
 
   isWebPage(url) {
     if (!url) {
       this.Error_message += "url must be specified; ";
-    } else if (!validUrl.isUri(url)) {
-      this.Error_message += "url specified is wrong, please check!!; ";
     }
-
     if (this.Error_message != "") {
       throw new Error(this.Error_message);
     }
@@ -112,6 +112,8 @@ class WebPage extends Publication {
 
 class ReferenceManger {
   publications = [];
+  stats_year_wise = {};
+
   addWebPage(title, author, year, url) {
     this.publications.push(new WebPage(title, author, year, url));
   }
@@ -125,14 +127,63 @@ class ReferenceManger {
       new Article(title, author, journal_name, volume, issue, year)
     );
   }
+
+  get_stats_year_wise() {
+    for (var i = 0; i < this.publications.length; i++) {
+      if (
+        this.publications[i].year in this.stats_year_wise &&
+        this.publications[i].type in
+          this.stats_year_wise[this.publications[i].year]
+      ) {
+        this.stats_year_wise[this.publications[i].year][
+          this.publications[i].type
+        ] += 1;
+      } else if (this.publications[i].year in this.stats_year_wise) {
+        this.stats_year_wise[this.publications[i].year][
+          this.publications[i].type
+        ] = 1;
+      } else {
+        this.stats_year_wise[this.publications[i].year] = {};
+        this.stats_year_wise[this.publications[i].year][
+          this.publications[i].type
+        ] = 1;
+      }
+    }
+  }
 }
 
-new WebPage("Title", "author", 2012, "https://google.com");
-
-module.exports = {
-  Book,
-};
-
-// for (i = 5; i < 20; i++) {
-//   console.log(`%c ${Array(Math.round(i * 2)).join("█")}\n`, "color: crimson");
-// }
+ref = new ReferenceManger();
+ref.addWebPage("Title", "author", 2012, "https://google.com");
+ref.addWebPage("Title", "author", 2012, "https://google.com");
+ref.addBook("Title", "author", "publisher", "Location", 2012);
+ref.addBook("Title", "author", "publisher", "Location", 2012);
+ref.addBook("Title", "author", "publisher", "Location", 2010);
+ref.addBook("Title", "author", "publisher", "Location", 2011);
+ref.addBook("Title", "author", "publisher", "Location", 2013);
+ref.addArticle("title", "author", "journal_name", 1, 2, 2019);
+ref.get_stats_year_wise();
+console.log(ref.stats_year_wise);
+for (let i in ref.stats_year_wise) {
+  console.log(i);
+  console.log(
+    `Book    | %c ${Array(
+      Math.round(ref.stats_year_wise[i].book * 2 || 0)
+    ).join("█")} ${ref.stats_year_wise[i].book || 0}`,
+    "color: red"
+  );
+  console.log(
+    `Article | %c ${Array(
+      Math.round(ref.stats_year_wise[i].article * 2 || 0)
+    ).join("█")} ${ref.stats_year_wise[i].article || 0}`,
+    "color: green"
+  );
+  console.log(
+    `Webpage | %c ${Array(
+      Math.round(ref.stats_year_wise[i].webpage * 2 || 0)
+    ).join("█")} ${ref.stats_year_wise[i].webpage || 0}`,
+    "color: blue"
+  );
+  console.log(
+    "-----------------------------------------------------------------------------------------------------"
+  );
+}
