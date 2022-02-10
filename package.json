@@ -4,7 +4,7 @@
   "description": "Publications problem code enhancement",
   "main": "main.js",
   "scripts": {
-    "test": "mocha"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -15,9 +15,5 @@
   "bugs": {
     "url": "https://github.com/kasivisu4/PDP_Homework_1/issues"
   },
-  "homepage": "https://github.com/kasivisu4/PDP_Homework_1#readme",
-  "dependencies": {
-    "mocha": "^9.2.0",
-    "valid-url": "^1.0.9"
-  }
+  "homepage": "https://github.com/kasivisu4/PDP_Homework_1#readme"
 }
