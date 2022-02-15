@@ -25,7 +25,7 @@ Calculating the stats for the publications in year & type level and printing the
 
 ## Contributors :
 
-Kasi Viswanath ![](https://avatars.githubusercontent.com/u/41234838?s=400&u=91eaca61edd2ff6ff5616c91f614753b13392fd3&v=4)
+Kasi Viswanath ![![](https://github.com/remarkablemark.png?size=50)](https://github.com/remarkablemark)
 
 ## Run Command :
 
