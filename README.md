@@ -17,9 +17,9 @@ In this project, there were totally 5 classes:
    - get_stats_year_wise - It calculate the stats of the publications based on the year and type of publication and stores in the stats_year_wise object.
    - stats_year_wise - Based on the stats_year_wise object it prints the Bar chart
 
-## creative feature :
+## Creative Feature :
 
-Calculating the stats for the publications in year & type level and printing the bar chart in the console.
+Calculating the stats for the publications in year & type level and printing the bar chart in the console with the help of get_stats_year_wise and stats_year_wise
 
 ## Run Command:
 
