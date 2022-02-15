@@ -11,6 +11,7 @@ class Publication {
     this.author = author;
     this.year = year;
   }
+
   isPublication(title, author, year) {
     if (!title) {
       this.Error_message += " title must be specified; ";
@@ -35,7 +36,7 @@ class Book extends Publication {
     this.isBook(publisher, location);
     this.publisher = publisher;
     this.location = location;
-    super.type = "book";
+    super.type = "Book";
   }
   isBook(publisher, location) {
     if (!publisher) {
@@ -49,7 +50,7 @@ class Book extends Publication {
     }
   }
   citeApa() {
-    return ` ${this.author} (${this.year}). ${this.title}. ${this.location}: ${this.publisher}.`;
+    return `${this.author} (${this.year}). ${this.title}. ${this.location}: ${this.publisher}.`;
   }
   citeMla() {
     return `${this.author}. ${this.title}. ${this.location}: ${this.publisher}, ${this.year}.`;
@@ -66,7 +67,7 @@ class Article extends Publication {
     this.journal_name = journal_name;
     this.volume = volume;
     this.issue = issue;
-    super.type = "article";
+    super.type = "Article";
   }
 
   isArticle(journal_name, volume, issue) {
@@ -97,7 +98,7 @@ class WebPage extends Publication {
     super(title, author, year);
     this.isWebPage(url);
     this.url = url;
-    super.type = "webpage";
+    super.type = "Webpage";
   }
 
   isWebPage(url) {
@@ -108,11 +109,19 @@ class WebPage extends Publication {
       throw new Error(this.Error_message);
     }
   }
+
+  citeApa() {
+    return `${this.author} (${this.year}). ${this.title}. ${this.url}.`;
+  }
+  citeMla() {
+    return `${this.author}. \"(${this.title})\"  ${this.url}, (${this.year}).`;
+  }
 }
 
 class ReferenceManger {
   publications = [];
   stats_year_wise = {};
+  stats_type = ["Book", "Article", "Webpage"];
 
   addWebPage(title, author, year, url) {
     this.publications.push(new WebPage(title, author, year, url));
@@ -128,6 +137,31 @@ class ReferenceManger {
     );
   }
 
+  printCitations(type) {
+    for (let pub of this.publications) {
+      if (type === "APA") console.log(pub.citeApa());
+      else console.log(pub.citeMla());
+    }
+  }
+
+  //This will remove the reference based on title, author, year, type; the type can be either Book or Article or WebPage
+  removeReference(title, author, year, type) {
+    for (var i = 0; i < this.publications.length; i++) {
+      if (
+        this.publications[i].title === title &&
+        this.publications[i].author === author &&
+        this.publications[i].year === year &&
+        this.publications[i].type === type
+      ) {
+        console.log("removed: " + this.publications[i].citeApa() + "\n");
+        this.publications.splice(i, 1);
+      }
+    }
+    this.stats_year_wise = {};
+    this.get_stats_year_wise();
+  }
+
+  //This function will calculate the stats of all the publications and store it in the stats_year_wise
   get_stats_year_wise() {
     for (var i = 0; i < this.publications.length; i++) {
       if (
@@ -150,40 +184,92 @@ class ReferenceManger {
       }
     }
   }
+
+  //This function will get the stats from the stats_year_wise and print in the console year wise
+  print_in_console_stats() {
+    let type;
+    console.log("---------Printing stats---------");
+    for (let year in ref.stats_year_wise) {
+      console.log(year);
+      for (let j of ref.stats_type) {
+        if (j == "Book") {
+          type = `${j}         |`;
+        } else {
+          type = `${j}      |`;
+        }
+        console.log(
+          `${type}${Array(
+            Math.round(ref.stats_year_wise[year][j] * 2 || 0)
+          ).join("█")} ${ref.stats_year_wise[year][j] || 0}`
+        );
+      }
+      console.log(
+        "-----------------------------------------------------------------------------------------------------"
+      );
+    }
+  }
 }
 
 ref = new ReferenceManger();
-ref.addWebPage("Title", "author", 2012, "https://google.com");
-ref.addWebPage("Title", "author", 2012, "https://google.com");
-ref.addBook("Title", "author", "publisher", "Location", 2012);
-ref.addBook("Title", "author", "publisher", "Location", 2012);
-ref.addBook("Title", "author", "publisher", "Location", 2010);
-ref.addBook("Title", "author", "publisher", "Location", 2011);
-ref.addBook("Title", "author", "publisher", "Location", 2013);
-ref.addArticle("title", "author", "journal_name", 1, 2, 2019);
+ref.addWebPage(
+  "The Modern JavaScript Tutorial",
+  "Ilya Kantor",
+  2007,
+  "https://javascript.info/"
+);
+ref.addWebPage(
+  "React Tutorial",
+  "W3Schools ",
+  2013,
+  "https://www.w3schools.com/REACT/DEFAULT.ASP"
+);
+ref.addBook(
+  "Eloquent JavaScript: A Modern Introduction to Programming",
+  "Marjin Haverbeke",
+  "No Starch Press",
+  "Berlin",
+  2018
+);
+ref.addBook(
+  "JavaScript & JQuery: Interactive Front-End Web Development",
+  "Jon Duckett",
+  "Wiley",
+  "South Carolina",
+  2013
+);
+ref.addBook(
+  "JavaScript: The Good Parts",
+  "Douglas Crockford",
+  "O Reilly",
+  "South Carolina",
+  2018
+);
+ref.addArticle("Navio", "John Guerra", "TVCG", 12, 5, 2018);
+
+ref.addArticle(
+  "Design patterns in modern JavaScript development",
+  "Kristian Poslek",
+  "TVCG",
+  1,
+  2,
+  2018
+);
+
+ref.addArticle("Design patterns 2", "Kristia", "TVCG", 1, 2, 2019);
+
+console.log("\nciteApa --------------------");
+ref.printCitations("APA");
+console.log("\nciteMla --------------------");
+ref.printCitations("MLA");
+
 ref.get_stats_year_wise();
-console.log(ref.stats_year_wise);
-for (let i in ref.stats_year_wise) {
-  console.log(i);
-  console.log(
-    `Book    | %c ${Array(
-      Math.round(ref.stats_year_wise[i].book * 2 || 0)
-    ).join("█")} ${ref.stats_year_wise[i].book || 0}`,
-    "color: red"
-  );
-  console.log(
-    `Article | %c ${Array(
-      Math.round(ref.stats_year_wise[i].article * 2 || 0)
-    ).join("█")} ${ref.stats_year_wise[i].article || 0}`,
-    "color: green"
-  );
-  console.log(
-    `Webpage | %c ${Array(
-      Math.round(ref.stats_year_wise[i].webpage * 2 || 0)
-    ).join("█")} ${ref.stats_year_wise[i].webpage || 0}`,
-    "color: blue"
-  );
-  console.log(
-    "-----------------------------------------------------------------------------------------------------"
-  );
-}
+ref.print_in_console_stats();
+
+ref.removeReference(
+  "JavaScript: The Good Parts",
+  "Douglas Crockford",
+  2018,
+  "Book"
+);
+
+ref.print_in_console_stats();
