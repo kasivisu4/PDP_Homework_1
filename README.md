@@ -1,4 +1,4 @@
-# PDP Home Work : Creating the Reference Manger to manage Books,Articles and WebPages
+# PDP Home Work 1: Creating the Reference Manger to manage Books,Articles and WebPages
 
 ## Project Description:
 
@@ -28,3 +28,7 @@ Calculating the stats for the publications in year & type level and printing the
 ```
 node main.js
 ```
+
+---
+
+© 2022 MIT
