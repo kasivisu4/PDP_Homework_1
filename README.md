@@ -1,6 +1,6 @@
-# PDP Home Work 1: Creating the Reference Manger to manage Books,Articles and WebPages
+# PDP Home Work 1 : Creating the Reference Manger to manage Books,Articles and WebPages
 
-## Project Description:
+## Project Description :
 
 In this project, there were totally 5 classes:
 
@@ -23,7 +23,11 @@ Calculating the stats for the publications in year & type level and printing the
 
 ![Stats Image](stats.png)
 
-## Run Command:
+## Contributors :
+
+Kasi Viswanath ![](https://avatars.githubusercontent.com/u/41234838?s=400&u=91eaca61edd2ff6ff5616c91f614753b13392fd3&v=4)
+
+## Run Command :
 
 ```
 node main.js
