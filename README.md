@@ -33,7 +33,9 @@ Ex : Class Name {
    }
 ```
 
-new Name("","25") Generally when comparison we get the error first name is not null and once we updated then age will throw an error - basically 2 times
+while creating the new Name("","25") Object
+
+Generally we validate the input parameters first name is not null and once we updated the first name then age will throw an error - basically 2 times
 
 In my case new Name("","25") the Error_message will be appending all the errors for the check and then it will throw at a time before creating the object.
 
