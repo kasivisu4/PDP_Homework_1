@@ -19,7 +19,7 @@ In this project, there were totally 5 classes:
 
 ## Creative Feature :
 
-1.Calculating the stats for the publications in year & type level and printing the bar chart in the console with the help of get_stats_year_wise and stats_year_wise
+1. Calculating the stats for the publications in year & type level and printing the bar chart in the console with the help of get_stats_year_wise and stats_year_wise
 
 ![Stats Image](stats.png)
 
