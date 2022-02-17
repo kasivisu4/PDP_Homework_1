@@ -19,9 +19,23 @@ In this project, there were totally 5 classes:
 
 ## Creative Feature :
 
-Calculating the stats for the publications in year & type level and printing the bar chart in the console with the help of get_stats_year_wise and stats_year_wise
+1.Calculating the stats for the publications in year & type level and printing the bar chart in the console with the help of get_stats_year_wise and stats_year_wise
 
 ![Stats Image](stats.png)
+
+2. Created the Variable named Error_message which will store all the errors specific to object creation instead of throwing one exception by exception while creating the object.
+
+```
+Ex : Class Name {
+      name(should be string and not null),
+      age(number)
+
+   }
+```
+
+new Name("","25") Generally when comparison we get the error first name is not null and once we updated then age will throw an error - basically 2 times
+
+In my case new Name("","25") the Error_message will be appending all the errors for the check and then it will throw at a time before creating the object.
 
 ## Contributors :
 
